@@ -1,4 +1,6 @@
 # Private settings files
 account/settings/development.py
+account/settings/production.py
+
 # Project exclude paths
 /venv/
