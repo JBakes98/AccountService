@@ -9,6 +9,34 @@ services:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+
+  redis:
+    image: redis:alpine
+
+  celery:
+    build: .
+    command: celery -A account worker -l info
+    volumes:
+      - .:/code
+    environment:
+      - DEBUG=1
+      - SECRET_KEY=django-insecure-ssm422e1q=onlqg_aocgj=f94ettm4l=*&_0o7j8nxt%-vhqtg
+      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+    depends_on:
+      - redis
+
+  celery-beat:
+    build: .
+    command: celery -A account beat -l info
+    volumes:
+      - .:/code
+    environment:
+      - DEBUG=1
+      - SECRET_KEY=django-insecure-ssm422e1q=onlqg_aocgj=f94ettm4l=*&_0o7j8nxt%-vhqtg
+      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+    depends_on:
+      - redis
+
   web:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
@@ -16,5 +44,10 @@ services:
       - .:/code
     ports:
       - "8000:8000"
+    environment:
+      - DEBUG=1
+      - SECRET_KEY=django-insecure-ssm422e1q=onlqg_aocgj=f94ettm4l=*&_0o7j8nxt%-vhqtg
+      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
     depends_on:
       - db
+      - redis

@@ -1,6 +1,9 @@
 # Private settings files
 account/settings/development.py
-account/settings/production.py
+account/settings/development.py
 
 # Project exclude paths
 /venv/
+/data/
+/celerybeat-schedule
+/.idea/
