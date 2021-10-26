@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -30,7 +31,7 @@ INSTALLED_APPS = [
 # API settings
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'account.authentication.ExpiringTokenAuthentication',
+        'account.authentication.CustomAuthentication',
     ),
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
@@ -40,6 +41,8 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 50,
     'COERCE_DECIMAL_TO_STRING': False,
 }
+
+CORS_ALLOW_CREDENTIALS = True
 
 EMAIL_CONFIRMATION_EXPIRE_DAYS = 5
 EMAIL_CONFIRMATION_COOLDOWN = 60*60

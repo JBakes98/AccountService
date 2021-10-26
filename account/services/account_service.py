@@ -39,8 +39,11 @@ class AccountService:
         """
         user = authenticate(username=self._email, password=self._password)
         # Did we get back an active user?
-        if user:
-            if not user.is_active:
+        if user is not None:
+            if user.is_active:
+                data = get_tokens_for_user(user)
+
+            else:
                 msg = _('User account is disabled.')
                 raise ValidationError(msg)
         else:

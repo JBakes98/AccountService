@@ -1,1 +1,1 @@
-from .authentication_helper import ExpiringTokenAuthentication
+from .authentication_helper import CustomAuthentication
